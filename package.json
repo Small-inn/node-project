@@ -8,11 +8,6 @@
     "lint": "eslint .",
     "fix": "eslint --fix ."
   },
-  "pre-commit": [
-    "test",
-    "lint",
-    "fix"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Small-inn/node-project.git"
