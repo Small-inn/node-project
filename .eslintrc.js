@@ -11,6 +11,7 @@ module.exports = {
       "sourceType": "script"
     },
     "globals": {
+      "window": true
     },
     "env": {
       "node": true,

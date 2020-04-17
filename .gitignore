@@ -6,7 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 pack-lock.json*
 
-*.vscode
+# 
+.vscode/
+.idea/
+*.swp/
+.DS_Store
+build/
+dist/
 
 # Runtime data
 pids
