@@ -4,13 +4,14 @@ const { promisify } = require('util');
 const Handlebars  = require('handlebars')
 const stat = promisify(fs.stat);
 const readdir = promisify(fs.readdir);
-const conf = require('../config/index')
+const conf = require('../config/index');
 
 const tplPath = path.join(__dirname, '../tmp/dir.tpl');
 const source = fs.readFileSync(tplPath);
 const template = Handlebars.compile(source.toString());
 const mime = require('./mime');
 const compress = require('./compress');
+const range = require('./range');
 
 module.exports = async function (req, res, filePath) {
   try {
@@ -19,8 +20,15 @@ module.exports = async function (req, res, filePath) {
       const contentType = mime(filePath);
       res.statusCode = 200;
       res.setHeader('Content-Type', contentType);
-      fs.createReadStream(filePath).pipe(res);
-      let rs = fs.createReadStream(filePath);
+      let rs;
+      const { code, start, end } = range(stats.size, req, res)
+      if (code === 200) {
+        rs = fs.createReadStream(filePath)
+      } else {
+        rs = fs.createReadStream(filePath, {start, end})
+      }
+      // fs.createReadStream(filePath).pipe(res);
+      // let rs = fs.createReadStream(filePath);
       if (filePath.match(conf.compress)) {
         rs = compress(rs, req, res);
       }
