@@ -1,4 +1,5 @@
 const handleBlogRouter = (req, res) => {
+  console.log(res)
   const method = req.method
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
