@@ -1,4 +1,5 @@
 const getList = (author, keyword) => {
+  console.log(author, keyword)
   return [
     {
       id: 1,
@@ -18,6 +19,7 @@ const getList = (author, keyword) => {
 }
 
 const getDetail = (id) => {
+  console.log(id)
   return {
     id: 1,
     title: '标题A',

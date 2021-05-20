@@ -7,6 +7,7 @@ const getPostData = (req, res) => {
   // console.log(req.method)
   // console.log(req.headers)
   return new Promise((resolve, reject) => {
+    console.log(reject)
     if (req.method !== 'POST') {
       resolve({})
       return

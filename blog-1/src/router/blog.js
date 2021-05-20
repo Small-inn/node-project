@@ -3,7 +3,7 @@ const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../control
 
 
 const handleBlogRouter = (req, res) => {
-  // console.log(res)
+  console.log(res)
 
   const method = req.method
   const id = req.query.id || ''
