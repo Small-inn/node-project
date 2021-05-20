@@ -1,11 +1,17 @@
+const { SuccessModel, ErrorModel } = require('../model/resModal')
+const { login } = require('../controller/user')
+
 const handleUserRouter = (req, res) => {
-  console.log(res)
   const method = req.method
 
   if (method === 'POST' && req.path === '/api/user/login') {
-    return {
-      msg: '登录接口',
-
+    const { username, password } = req.body
+    console.log(username, password)
+    const result = login(username, password)
+    if (result) {
+      return new SuccessModel('登录成功')
+    } else {
+      return new ErrorModel('登录失败')
     }
   }
 }
