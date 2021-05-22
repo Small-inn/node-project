@@ -2,17 +2,21 @@ const { SuccessModel, ErrorModel } = require('../model/resModal')
 const { getList, getDetail, newBlog, updateBlog, delBlog } = require('../controller/blog')
 
 
-const handleBlogRouter = (req, res) => {
-  console.log(res)
-
+const handleBlogRouter = (req) => {
   const method = req.method
   const id = req.query.id || ''
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
     const author = req.query.author || ''
     const keyword = req.query.keyword || ''
-    const listData = getList(author, keyword)
-    return new SuccessModel(listData)
+
+    const result = getList(author, keyword)
+    return result.then(listData => {
+      return new SuccessModel(listData)
+    }).catch(err => {
+      console.log(err)
+    })
+    
   }
   // 获取博客详情
   if (method === 'GET' && req.path === '/api/blog/detail') {
@@ -31,7 +35,7 @@ const handleBlogRouter = (req, res) => {
   // 更新博客
   if (method === 'POST' && req.path === '/api/blog/update') {
     const postdata = req.body
-    console.log(postdata)
+    // console.log(postdata)
     const result = updateBlog(id, postdata)
     if (result) {
       return new SuccessModel('更新成功')
@@ -49,4 +53,5 @@ const handleBlogRouter = (req, res) => {
     }
   }
 }
+
 module.exports = handleBlogRouter

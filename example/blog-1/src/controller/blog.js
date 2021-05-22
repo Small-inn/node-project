@@ -1,23 +1,20 @@
+const { exec } = require('../db/mysql')
+
+// 获取博客列表
 const getList = (author, keyword) => {
-  console.log(author, keyword)
-  return [
-    {
-      id: 1,
-      title: '标题A',
-      content: '内容A',
-      createTime: '12321312312',
-      author: 'zhangsan'
-    },
-    {
-      id: 2,
-      title: '标题B',
-      content: '内容B',
-      createTime: '12321312312',
-      author: 'lisi'
-    }
-  ]
+  let sql = `select * from blog where 1=1`
+  if (author) {
+    sql += `and author='${author}'`
+  }
+  if (keyword) {
+    sql += `and title like '%${keyword}%'`
+  }
+  // sql += `order by createtime desc;`
+
+  return exec(sql)
 }
 
+// 获取博客详情
 const getDetail = (id) => {
   console.log(id)
   return {
@@ -28,7 +25,8 @@ const getDetail = (id) => {
     author: 'zhangsan'
   }
 }
-
+ 
+// 新增博客
 const newBlog = (postData = {}) => {
   console.log(postData)
   return {
