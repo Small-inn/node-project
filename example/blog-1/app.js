@@ -3,7 +3,7 @@ const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 
 // 处理post data promise封装
-const getPostData = (req, res) => {
+const getPostData = (req) => {
   console.log(req.method)
   // console.log(req.headers['Content-type'])
   return new Promise((resolve) => {
