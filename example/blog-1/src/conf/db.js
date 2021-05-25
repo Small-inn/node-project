@@ -1,3 +1,10 @@
+/*
+ * @Author: liux 
+ * @Date: 2021-05-Tu 11:46:54 
+ * @Last Modified by:   liux 
+ * @Last Modified time: 2021-05-Tu 11:46:54 
+ */
+
 const env = process.env.NODE_ENV
 
 let MYSQL_CONF

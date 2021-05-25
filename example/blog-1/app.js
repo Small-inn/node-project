@@ -1,40 +1,17 @@
+/*
+ * @Author: liux
+ * @Date: 2021-05-Tu 11:37:38 
+ * @Last Modified by: liux 
+ * @Last Modified time: 2021-05-Tu 11:37:38 
+ */
+
 const querystring = require('querystring')
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
-
-// 处理post data promise封装
-const getPostData = (req) => {
-  console.log(req.method)
-  // console.log(req.headers['Content-type'])
-  return new Promise((resolve) => {
-    // console.log(reject)
-    if (req.method !== 'POST') {
-      resolve({})
-      return
-    }
-    if (req.headers['Content-type'] !== 'application/json') {
-      resolve({})
-      return
-    }
-    let postData = ''
-    req.on('data', chunk => {
-      // console.log(chunk)
-      postData += chunk.toString()
-    })
-    req.on('end', () => {
-      if (!postData) {
-        resolve({})
-        return
-      }
-      console.log(postData)
-      resolve(JSON.parse(postData))
-    })
-  })
-}
+const { getPostData } = require('./src/utils/utils')
 
 // 处理请求与响应
 const serverHandle = (req, res) => {
-  // console.log(Content-type)
   // 设置响应头，格式返回json
   res.setHeader('Content-type', 'application/json')
   // 获取path
@@ -45,8 +22,8 @@ const serverHandle = (req, res) => {
 
   // 处理post data 
   getPostData(req, res).then(postdata => {
-    console.log(postdata)
     req.body = postdata
+    // console.log(req.body)
     // 处理路由
     // blog
     // const blogData = handleBlogRouter(req, res)
@@ -58,9 +35,8 @@ const serverHandle = (req, res) => {
     if (resultBlog) {
       resultBlog.then(blogData => {
         res.end(JSON.stringify(blogData))
-      }).catch(err => {
-        console.log(err)
       })
+      return
     }
 
     // user

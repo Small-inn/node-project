@@ -4,26 +4,22 @@ const { exec } = require('../db/mysql')
 const getList = (author, keyword) => {
   let sql = `select * from blog where 1=1`
   if (author) {
-    sql += `and author='${author}'`
+    sql += ` and author='${author}'`
   }
   if (keyword) {
-    sql += `and title like '%${keyword}%'`
+    sql += ` and title like '%${keyword}%'`
   }
-  // sql += `order by createtime desc;`
-
+  sql += ` order by createtime desc;`
+  console.log(sql)
   return exec(sql)
 }
 
 // 获取博客详情
 const getDetail = (id) => {
-  console.log(id)
-  return {
-    id: 1,
-    title: '标题A',
-    content: '内容A',
-    createTime: '12321312312',
-    author: 'zhangsan'
-  }
+  const sql = `select * from blog where id=${id}`
+  return exec(sql).then(res => {
+    return res[0]
+  })
 }
  
 // 新增博客

@@ -11,17 +11,20 @@ const handleBlogRouter = (req) => {
     const keyword = req.query.keyword || ''
 
     const result = getList(author, keyword)
+
     return result.then(listData => {
+      console.log(listData)
       return new SuccessModel(listData)
     }).catch(err => {
-      console.log(err)
+      console.log(err) 
     })
     
   }
   // 获取博客详情
   if (method === 'GET' && req.path === '/api/blog/detail') {
-    const data = getDetail(id)
-    return new SuccessModel(data)
+    return getDetail(id).then(data => {
+      return new SuccessModel(data)
+    })
   }
   // 新建博客
   if (method === 'POST' && req.path === '/api/blog/new') {
