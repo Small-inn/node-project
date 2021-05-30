@@ -42,7 +42,9 @@ const serverHandle = (req, res) => {
     // user
     const userData = handleUserRouter(req, res)
     if (userData) {
-      res.end(JSON.stringify(userData))
+      userData.then(userData => {
+        res.end(JSON.stringify(userData))
+      })
       return 
     }
     // 异常处理
