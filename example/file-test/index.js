@@ -17,6 +17,6 @@ const content = {
   b: 2
 }
 
-fs.writeFile(filename, content, opt, (err) => {
+fs.writeFile(filename, content, (err) => {
   if (err) console.log(err)
 })

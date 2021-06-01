@@ -1,8 +1,8 @@
 const { SuccessModel, ErrorModel } = require('../model/resModal')
 const { login } = require('../controller/user')
-const { getCookieExpires } = require('../utils/utils')
+// const { getCookieExpires } = require('../utils/utils')
 
-const handleUserRouter = (req, res) => {
+const handleUserRouter = (req) => {
   // console.log(res)
   const method = req.method
 
@@ -13,8 +13,8 @@ const handleUserRouter = (req, res) => {
     return result.then(data => {
       if (data.username) {
         // 设置session
-        req,session.username = data.username
-        req,session.password = data.password
+        req.session.username = data.username
+        req.session.password = data.password
         // 操作cookie
         // result.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${getCookieExpires()}`)
         return new SuccessModel()
