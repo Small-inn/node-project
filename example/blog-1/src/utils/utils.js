@@ -24,4 +24,11 @@ const getPostData = (req) => {
   })
 }
 
-module.exports = { getPostData }
+// 获取cookie过期时间
+const getCookieExpires = () => {
+  const d = new Date()
+  d.setTime(d.getTime() + (24 * 60 * 60 * 1000))
+  return d.toGMTString()
+}
+
+module.exports = { getPostData, getCookieExpires }
