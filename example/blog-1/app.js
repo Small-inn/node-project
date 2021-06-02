@@ -10,10 +10,13 @@ const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 const { getPostData } = require('./src/utils/utils')
 const { getCookieExpires } = require('./src/utils/utils')
+const { access } = require('./src/utils/logs')
 
 const SESSION_DATA = {}
 // 处理请求与响应
 const serverHandle = (req, res) => {
+  // 记录日志
+  access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
   // 设置响应头，格式返回json
   res.setHeader('Content-type', 'application/json')
   // 获取path
