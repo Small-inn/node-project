@@ -1,11 +1,12 @@
 const { SuccessModel, ErrorModel } = require('../model/resModal')
 const { login } = require('../controller/user')
 // const { getCookieExpires } = require('../utils/utils')
+const { set } = require('../db/redis')
 
 const handleUserRouter = (req) => {
   // console.log(res)
   const method = req.method
-
+  // 登录
   if (method === 'POST' && req.path === '/api/user/login') {
     const { username, password } = req.body
     console.log(username, password)
@@ -17,6 +18,9 @@ const handleUserRouter = (req) => {
         req.session.password = data.password
         // 操作cookie
         // result.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${getCookieExpires()}`)
+        // 同步到 redis
+        set(req.sessionId, req.session)
+        
         return new SuccessModel()
       } else {
         return new ErrorModel('登录失败')

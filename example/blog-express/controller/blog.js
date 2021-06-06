@@ -1,5 +1,6 @@
 const { exec } = require('../db/mysql')
 const xss = require('xss')
+
 // 获取博客列表
 const getList = (author, keyword) => {
   let sql = `select * from blog where 1=1`
@@ -10,11 +11,12 @@ const getList = (author, keyword) => {
     sql += ` and title like '%${keyword}%'`
   }
   sql += ` order by createtime desc;`
+
   console.log(sql)
   return exec(sql)
 }
 
-// 获取博客详情
+// 获取博客
 const getDetail = (id) => {
   const sql = `select * from blog where id=${id}`
   return exec(sql).then(res => {
@@ -24,11 +26,13 @@ const getDetail = (id) => {
  
 // 新增博客
 const newBlog = (blogData = {}) => {
-  console.log(blogData)
+ // blogData 是一个博客对象，包含 title content author 属性
   const title = xss(blogData.title)
+  // console.log('title is', title)
   const content = xss(blogData.content)
   const author = blogData.author
-  const createtime = Date.now()
+  const createTime = Date.now()
+
   const sql = `
     insert into blog (title, content, createtime, author)
     values ('${title}', '${content}', '${createtime}', '${author}')
@@ -41,14 +45,12 @@ const newBlog = (blogData = {}) => {
   })
 }
 
-const updateBlog = (id, postData = {}) => {
-  // const { title, content } = postData
-  const title = xss(postData.title)
-  const content = xss(postData.content)
-  
-  const sql = `
-    update blog set title='${title}', content='${content}' where id='${id}'
-  `
+// 更新博客
+const updateBlog = (id, blogData = {}) => {
+  const title = xss(blogData.title)
+  const content = xss(blogData.content)
+
+  const sql = `update blog set title='${title}', content='${content}' where id='${id}'`
   return exec(sql).then(updateData => {
     if (updateData.affecteRows > 0) {
       return true
@@ -58,6 +60,7 @@ const updateBlog = (id, postData = {}) => {
   })
 }
 
+// 删除博客
 const delBlog = (id, author) => {
   const sql = `delete from blog where id='${id}' and author='${author}'`
   return exec(sql).then(delData => {
