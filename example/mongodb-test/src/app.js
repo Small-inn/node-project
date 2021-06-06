@@ -15,7 +15,7 @@ MongoClient.connect(
 
     // 切换到数据库（控制台 use myblog）
     const db = client.db(dbname)
-
+    console.log(db)
     // 关闭连接
     client.close()
   }
