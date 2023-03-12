@@ -1,0 +1,13 @@
+// const inquirer = require('inquirer')
+// import { inquirer } from 'inquirer'
+
+import inquirer from 'inquirer'
+inquirer.prompt([
+  {
+    type: 'input',
+    name: 'username',
+    message: '你的名字'
+  }
+]).then(answer => {
+  console.log(answer)
+})
