@@ -1,6 +1,8 @@
 // import inquirer from 'inquirer'
-const inquirer = require('inquirer')
+
+var inquirer = require('inquirer')
 const config = require('../../config')
+const downloadFn = require('./download')
 const myAction = (project, args) => {
   // 命令行执行的逻辑代码
   // console.log(project)
@@ -14,6 +16,8 @@ const myAction = (project, args) => {
     }
   ]).then(answer => {
     console.log(answer)
+    const url = config.framworkUrl[answer.framwork]
+    downloadFn(url, project)
   })
 }
 
